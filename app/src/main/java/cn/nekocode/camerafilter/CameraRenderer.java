@@ -24,6 +24,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.TextureView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -121,13 +122,20 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         gwidth = -width;
         gheight = -height;
 
+        initCamera();
+
+        // Start rendering
+        renderThread.start();
+    }
+
+    private void initCamera() {
         // Open camera
         Pair<Camera.CameraInfo, Integer> backCamera = getBackCamera();
         final int backCameraId = backCamera.second;
         camera = Camera.open(backCameraId);
-
-        // Start rendering
-        renderThread.start();
+        Camera.Parameters params = camera.getParameters();
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        camera.setParameters(params);
     }
 
     public void setSelectedFilter(int id) {
@@ -145,24 +153,24 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         cameraFilterMap.append(R.id.filter0, new OriginalFilter(context));
         cameraFilterMap.append(R.id.filter1, new EdgeDetectionFilter(context));
         cameraFilterMap.append(R.id.filter2, new PixelizeFilter(context));
-        cameraFilterMap.append(R.id.filter3, new EMInterferenceFilter(context));
-        cameraFilterMap.append(R.id.filter4, new TrianglesMosaicFilter(context));
-        cameraFilterMap.append(R.id.filter5, new LegofiedFilter(context));
-        cameraFilterMap.append(R.id.filter6, new TileMosaicFilter(context));
+//        cameraFilterMap.append(R.id.filter3, new EMInterferenceFilter(context));
+//        cameraFilterMap.append(R.id.filter4, new TrianglesMosaicFilter(context));
+//        cameraFilterMap.append(R.id.filter5, new LegofiedFilter(context));
+//        cameraFilterMap.append(R.id.filter6, new TileMosaicFilter(context));
         cameraFilterMap.append(R.id.filter7, new BlueorangeFilter(context));
-        cameraFilterMap.append(R.id.filter8, new ChromaticAberrationFilter(context));
-        cameraFilterMap.append(R.id.filter9, new BasicDeformFilter(context));
+//        cameraFilterMap.append(R.id.filter8, new ChromaticAberrationFilter(context));
+//        cameraFilterMap.append(R.id.filter9, new BasicDeformFilter(context));
         cameraFilterMap.append(R.id.filter10, new ContrastFilter(context));
-        cameraFilterMap.append(R.id.filter11, new NoiseWarpFilter(context));
-        cameraFilterMap.append(R.id.filter12, new RefractionFilter(context));
-        cameraFilterMap.append(R.id.filter13, new MappingFilter(context));
-        cameraFilterMap.append(R.id.filter14, new CrosshatchFilter(context));
-        cameraFilterMap.append(R.id.filter15, new LichtensteinEsqueFilter(context));
-        cameraFilterMap.append(R.id.filter16, new AsciiArtFilter(context));
-        cameraFilterMap.append(R.id.filter17, new MoneyFilter(context));
-        cameraFilterMap.append(R.id.filter18, new CrackedFilter(context));
-        cameraFilterMap.append(R.id.filter19, new PolygonizationFilter(context));
-        cameraFilterMap.append(R.id.filter20, new JFAVoronoiFilter(context));
+//        cameraFilterMap.append(R.id.filter11, new NoiseWarpFilter(context));
+//        cameraFilterMap.append(R.id.filter12, new RefractionFilter(context));
+//        cameraFilterMap.append(R.id.filter13, new MappingFilter(context));
+//        cameraFilterMap.append(R.id.filter14, new CrosshatchFilter(context));
+//        cameraFilterMap.append(R.id.filter15, new LichtensteinEsqueFilter(context));
+//        cameraFilterMap.append(R.id.filter16, new AsciiArtFilter(context));
+//        cameraFilterMap.append(R.id.filter17, new MoneyFilter(context));
+//        cameraFilterMap.append(R.id.filter18, new CrackedFilter(context));
+//        cameraFilterMap.append(R.id.filter19, new PolygonizationFilter(context));
+//        cameraFilterMap.append(R.id.filter20, new JFAVoronoiFilter(context));
         setSelectedFilter(selectedFilterId);
 
         // Create texture for camera preview
@@ -268,6 +276,21 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         }
     }
 
+    public void zoom() {
+        Camera.Parameters params = camera.getParameters();
+
+        Toast.makeText(context, "" + params.getZoom() + "/" + params.getMaxZoom() + "out of" + params.getZoomRatios().get(params.getMaxZoom()), Toast.LENGTH_SHORT).show();
+        params.setZoom(params.getMaxZoom());
+        camera.setParameters(params);
+    }
+
+    public void unzoom() {
+        Camera.Parameters params = camera.getParameters();
+        params.setZoom(0);
+        camera.setParameters(params);
+    }
+
+
     private Pair<Camera.CameraInfo, Integer> getBackCamera() {
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
         final int numberOfCameras = Camera.getNumberOfCameras();
@@ -279,5 +302,9 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
             }
         }
         return null;
+    }
+
+    public SparseArray<CameraFilter> getCameraFilterMap() {
+        return cameraFilterMap;
     }
 }

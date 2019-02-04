@@ -19,40 +19,39 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.util.SparseArray;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import cn.nekocode.camerafilter.filter.CameraFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  */
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 101;
-    private FrameLayout container;
     private CameraRenderer renderer;
     private TextureView textureView;
-    private int filterId = R.id.filter0;
+
+    private ImageView zoomButton;
+    private boolean zoomFlag = false;
+
+    private ImageView captureButton;
+    private boolean captureFlag = false;
+    private ImageView captureImageView;
+
+    private ImageView constrastButton;
+    private int contrastIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(container = new FrameLayout(this));
+        setContentView(R.layout.activity_main);
         setTitle("Original");
 
         if (ContextCompat.checkSelfPermission(this,
@@ -85,28 +84,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setupCameraPreviewView() {
+        textureView = findViewById(R.id.textureView);
         renderer = new CameraRenderer(this);
-        textureView = new TextureView(this);
-        container.addView(textureView);
         textureView.setSurfaceTextureListener(renderer);
-
-        // Show original frame when touch the view
-        textureView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        renderer.setSelectedFilter(R.id.filter0);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        renderer.setSelectedFilter(filterId);
-                        break;
-                }
-                return true;
-            }
-        });
 
         textureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -114,68 +94,47 @@ public class MainActivity extends AppCompatActivity {
                 renderer.onSurfaceTextureSizeChanged(null, v.getWidth(), v.getHeight());
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.filter, menu);
-        return true;
-    }
+        zoomButton = findViewById(R.id.zoom);
+        zoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!zoomFlag) {
+                    renderer.zoom();
+                } else {
+                    renderer.unzoom();
+                }
+                zoomFlag = !zoomFlag;
+            }
+        });
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        filterId = item.getItemId();
+        captureImageView = findViewById(R.id.captureImage);
 
-        // TODO: need tidy up
-        if (filterId == R.id.capture) {
-            Toast.makeText(this,
-                    capture() ? "The capture has been saved to your sdcard root path." :
-                            "Save failed!",
-                    Toast.LENGTH_SHORT).show();
-            return true;
-        }
+        captureButton = findViewById(R.id.capture);
+        captureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!captureFlag) {
+                    Bitmap bm = textureView.getBitmap();
+                    captureImageView.setVisibility(View.VISIBLE);
+                    captureImageView.setImageBitmap(bm);
+                    captureFlag = true;
+                } else {
+                    captureImageView.setVisibility(View.INVISIBLE);
+                    captureFlag = false;
+                }
+            }
+        });
 
-        setTitle(item.getTitle());
-
-        if (renderer != null)
-            renderer.setSelectedFilter(filterId);
-
-        return true;
-    }
-
-    private boolean capture() {
-        String mPath = genSaveFileName(getTitle().toString() + "_", ".png");
-        File imageFile = new File(mPath);
-        if (imageFile.exists()) {
-            imageFile.delete();
-        }
-
-        // create bitmap screen capture
-        Bitmap bitmap = textureView.getBitmap();
-        OutputStream outputStream = null;
-
-        try {
-            outputStream = new FileOutputStream(imageFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, outputStream);
-            outputStream.flush();
-            outputStream.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
-    private String genSaveFileName(String prefix, String suffix) {
-        Date date = new Date();
-        SimpleDateFormat dateformat1 = new SimpleDateFormat("yyyyMMdd_hhmmss");
-        String timeString = dateformat1.format(date);
-        String externalPath = Environment.getExternalStorageDirectory().toString();
-        return externalPath + "/" + prefix + timeString + suffix;
+        constrastButton = findViewById(R.id.contrast);
+        constrastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SparseArray<CameraFilter> filters = renderer.getCameraFilterMap();
+                contrastIndex++;
+                contrastIndex %= filters.size();
+                renderer.setSelectedFilter(filters.keyAt(contrastIndex));
+            }
+        });
     }
 }
