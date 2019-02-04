@@ -115,13 +115,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!captureFlag) {
-                    Bitmap bm = textureView.getBitmap();
-                    captureImageView.setVisibility(View.VISIBLE);
-                    captureImageView.setImageBitmap(bm);
-                    captureFlag = true;
+                    capture();
                 } else {
-                    captureImageView.setVisibility(View.INVISIBLE);
-                    captureFlag = false;
+                    uncapture();
                 }
             }
         });
@@ -136,5 +132,17 @@ public class MainActivity extends AppCompatActivity {
                 renderer.setSelectedFilter(filters.keyAt(contrastIndex));
             }
         });
+    }
+
+    private void capture() {
+        Bitmap bm = textureView.getBitmap();
+        captureImageView.setImageBitmap(bm);
+        captureImageView.setVisibility(View.VISIBLE);
+        captureFlag = true;
+    }
+
+    private void uncapture() {
+        captureImageView.setVisibility(View.INVISIBLE);
+        captureFlag = false;
     }
 }
