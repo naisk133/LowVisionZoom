@@ -9,7 +9,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="6dp"
-                android:color="@color/visionRed" />
+                android:color="@color/visionBlue" />
         </shape>
     </item>
 </layer-list>

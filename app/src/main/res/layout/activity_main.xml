@@ -54,7 +54,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_flash_on_24dp"
+            android:src="@drawable/ic_flash"
             tools:ignore="ContentDescription" />
     </FrameLayout>
 
@@ -71,8 +71,13 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:src="@drawable/capture"
+            android:src="@drawable/contrast"
             tools:ignore="ContentDescription" />
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_contrast"/>
     </FrameLayout>
 
     <com.github.chrisbanes.photoview.PhotoView
