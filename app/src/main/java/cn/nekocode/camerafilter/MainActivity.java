@@ -27,9 +27,11 @@ import android.util.SparseArray;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Locale;
 
 import cn.nekocode.camerafilter.filter.CameraFilter;
 
@@ -42,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private TextureView textureView;
 
     private ImageView zoomButton;
-    private boolean zoomFlag = false;
+    private TextView zoomLvl;
+    private final float[] zoomPercents = new float[] {0.0f, 0.33f, 0.67f, 1.0f};
+    private int zoomIndex = 0;
 
     private ImageView captureButton;
     private boolean captureFlag = false;
@@ -111,16 +115,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        zoomLvl = findViewById(R.id.zoomLvl);
         zoomButton = findViewById(R.id.zoom);
         zoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!zoomFlag) {
-                    renderer.zoom();
-                } else {
-                    renderer.unzoom();
-                }
-                zoomFlag = !zoomFlag;
+                zoomIndex++;
+                zoomIndex %= zoomPercents.length;
+                int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
+                String text = String.format(Locale.ENGLISH,"%.1fX",(float)magnifyValue / 100);
+                zoomLvl.setText(text);
             }
         });
 

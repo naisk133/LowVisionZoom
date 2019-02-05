@@ -17,10 +17,10 @@
 
         <ImageView
             android:id="@+id/zoom"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:src="@drawable/capture"
+            android:src="@drawable/zoom_active"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -28,9 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="#000000"
+            android:textColor="#ccbc0c"
             android:textSize="20sp"
-            tools:text="2.4" />
+            android:visibility="visible"
+            android:text="1.0X" />
     </FrameLayout>
 
 

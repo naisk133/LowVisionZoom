@@ -34,28 +34,12 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import cn.nekocode.camerafilter.filter.AsciiArtFilter;
-import cn.nekocode.camerafilter.filter.BasicDeformFilter;
 import cn.nekocode.camerafilter.filter.BlueorangeFilter;
 import cn.nekocode.camerafilter.filter.CameraFilter;
-import cn.nekocode.camerafilter.filter.ChromaticAberrationFilter;
 import cn.nekocode.camerafilter.filter.ContrastFilter;
-import cn.nekocode.camerafilter.filter.CrackedFilter;
-import cn.nekocode.camerafilter.filter.CrosshatchFilter;
-import cn.nekocode.camerafilter.filter.EMInterferenceFilter;
 import cn.nekocode.camerafilter.filter.EdgeDetectionFilter;
-import cn.nekocode.camerafilter.filter.JFAVoronoiFilter;
-import cn.nekocode.camerafilter.filter.LegofiedFilter;
-import cn.nekocode.camerafilter.filter.LichtensteinEsqueFilter;
-import cn.nekocode.camerafilter.filter.MappingFilter;
-import cn.nekocode.camerafilter.filter.MoneyFilter;
-import cn.nekocode.camerafilter.filter.NoiseWarpFilter;
 import cn.nekocode.camerafilter.filter.OriginalFilter;
 import cn.nekocode.camerafilter.filter.PixelizeFilter;
-import cn.nekocode.camerafilter.filter.PolygonizationFilter;
-import cn.nekocode.camerafilter.filter.RefractionFilter;
-import cn.nekocode.camerafilter.filter.TileMosaicFilter;
-import cn.nekocode.camerafilter.filter.TrianglesMosaicFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
@@ -276,12 +260,18 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         }
     }
 
+
     public void zoom() {
+        zoom(1.0f);
+    }
+
+    public int zoom(float zoomPercent) {
         Camera.Parameters params = camera.getParameters();
 
-        Toast.makeText(context, "" + params.getZoom() + "/" + params.getMaxZoom() + "out of" + params.getZoomRatios().get(params.getMaxZoom()), Toast.LENGTH_SHORT).show();
-        params.setZoom(params.getMaxZoom());
+        int zoomLevel = (int) (zoomPercent * params.getMaxZoom());
+        params.setZoom(zoomLevel);
         camera.setParameters(params);
+        return params.getZoomRatios().get(zoomLevel);
     }
 
     public void unzoom() {
