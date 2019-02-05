@@ -16,6 +16,7 @@
 package cn.nekocode.camerafilter;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -24,6 +25,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView zoomButton;
     private TextView zoomLvl;
-    private final float[] zoomPercents = new float[] {0.0f, 0.33f, 0.67f, 1.0f};
+    private final float[] zoomPercents = new float[]{0.0f, 0.33f, 0.67f, 1.0f};
     private int zoomIndex = 0;
 
     private ImageView captureButton;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Original");
 
+        //TODO: handle the app
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -72,10 +75,9 @@ public class MainActivity extends AppCompatActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
                 Toast.makeText(this, "Camera access is required.", Toast.LENGTH_SHORT).show();
 
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                        REQUEST_CAMERA_PERMISSION);
             }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                    REQUEST_CAMERA_PERMISSION);
 
         } else {
             setupCameraPreviewView();
@@ -110,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 renderer.focus(new Camera.AutoFocusCallback() {
                     @Override
-                    public void onAutoFocus(boolean b, Camera camera) {}
+                    public void onAutoFocus(boolean b, Camera camera) {
+                    }
                 });
             }
         });
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 zoomIndex++;
                 zoomIndex %= zoomPercents.length;
                 int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
-                String text = String.format(Locale.ENGLISH,"%.1fX",(float)magnifyValue / 100);
+                String text = String.format(Locale.ENGLISH, "%.1fX", (float) magnifyValue / 100);
                 zoomLvl.setText(text);
             }
         });

@@ -118,7 +118,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         final int backCameraId = backCamera.second;
         camera = Camera.open(backCameraId);
         Camera.Parameters params = camera.getParameters();
-        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
         camera.setParameters(params);
     }
 
@@ -274,12 +274,6 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         return params.getZoomRatios().get(zoomLevel);
     }
 
-    public void unzoom() {
-        Camera.Parameters params = camera.getParameters();
-        params.setZoom(0);
-        camera.setParameters(params);
-    }
-
     public void flash() {
         Camera.Parameters params = camera.getParameters();
         params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
@@ -292,8 +286,20 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         camera.setParameters(params);
     }
 
-    public void focus(Camera.AutoFocusCallback cb) {
-        camera.autoFocus(cb);
+    public void focus(final Camera.AutoFocusCallback cb) {
+        Camera.Parameters params = camera.getParameters();
+        params.setFlashMode(Camera.Parameters.FOCUS_MODE_MACRO);
+        camera.setParameters(params);
+        camera.cancelAutoFocus();
+        camera.autoFocus(new Camera.AutoFocusCallback() {
+            @Override
+            public void onAutoFocus(boolean b, Camera camera) {
+                cb.onAutoFocus(b, camera);
+                Camera.Parameters params = camera.getParameters();
+                params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
+                camera.setParameters(params);
+            }
+        });
     }
 
 
