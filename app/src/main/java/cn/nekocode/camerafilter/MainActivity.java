@@ -18,6 +18,7 @@ package cn.nekocode.camerafilter;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +28,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.List;
 
 import cn.nekocode.camerafilter.filter.CameraFilter;
 
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView constrastButton;
     private int contrastIndex = 0;
+
+    private ImageView flashButton;
+    private boolean flashFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +101,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        textureView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                renderer.focus(new Camera.AutoFocusCallback() {
+                    @Override
+                    public void onAutoFocus(boolean b, Camera camera) {}
+                });
+            }
+        });
+
         zoomButton = findViewById(R.id.zoom);
         zoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +146,20 @@ public class MainActivity extends AppCompatActivity {
                 contrastIndex++;
                 contrastIndex %= filters.size();
                 renderer.setSelectedFilter(filters.keyAt(contrastIndex));
+            }
+        });
+
+        flashButton = findViewById(R.id.flash);
+        flashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!flashFlag) {
+                    renderer.flash();
+                    flashFlag = true;
+                } else {
+                    renderer.unflash();
+                    flashFlag = false;
+                }
             }
         });
     }

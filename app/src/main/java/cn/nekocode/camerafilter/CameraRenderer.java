@@ -290,6 +290,22 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         camera.setParameters(params);
     }
 
+    public void flash() {
+        Camera.Parameters params = camera.getParameters();
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(params);
+    }
+
+    public void unflash() {
+        Camera.Parameters params = camera.getParameters();
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        camera.setParameters(params);
+    }
+
+    public void focus(Camera.AutoFocusCallback cb) {
+        camera.autoFocus(cb);
+    }
+
 
     private Pair<Camera.CameraInfo, Integer> getBackCamera() {
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
