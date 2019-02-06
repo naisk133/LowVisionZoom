@@ -34,10 +34,13 @@ import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
 import cn.nekocode.camerafilter.filter.BlackWhiteFilter;
-import cn.nekocode.camerafilter.filter.BlueorangeFilter;
+import cn.nekocode.camerafilter.filter.BlueOrangeFilter;
+import cn.nekocode.camerafilter.filter.BlueYellowFilter;
 import cn.nekocode.camerafilter.filter.CameraFilter;
+import cn.nekocode.camerafilter.filter.OrangeBlueFilter;
 import cn.nekocode.camerafilter.filter.OriginalFilter;
 import cn.nekocode.camerafilter.filter.WhiteBlackFilter;
+import cn.nekocode.camerafilter.filter.YellowBlueFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
@@ -135,7 +138,10 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         cameraFilterMap.append(R.id.filter0, new OriginalFilter(context));
         cameraFilterMap.append(R.id.filter1, new BlackWhiteFilter(context));
         cameraFilterMap.append(R.id.filter2, new WhiteBlackFilter(context));
-        cameraFilterMap.append(R.id.filter3, new BlueorangeFilter(context));
+        cameraFilterMap.append(R.id.filter3, new BlueOrangeFilter(context));
+        cameraFilterMap.append(R.id.filter4, new OrangeBlueFilter(context));
+        cameraFilterMap.append(R.id.filter5, new BlueYellowFilter(context));
+        cameraFilterMap.append(R.id.filter6, new YellowBlueFilter(context));
         setSelectedFilter(selectedFilterId);
 
         // Create texture for camera preview
