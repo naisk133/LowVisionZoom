@@ -3,8 +3,8 @@
     <color name="colorPrimary">#646464</color>
     <color name="colorPrimaryDark">#646464</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="visionYellow">#ebd911</color>
-    <color name="visionRed">#c00505</color>
-    <color name="visionBlue">#0816db</color>
-    <color name="visionGreen">#3ad30c</color>
+    <color name="visionYellow">#ffee58</color>
+    <color name="visionRed">#e53935</color>
+    <color name="visionBlue">#64b5f6</color>
+    <color name="visionGreen">#64dd17</color>
 </resources>

@@ -288,7 +288,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
 
     public void focus(final Camera.AutoFocusCallback cb) {
         Camera.Parameters params = camera.getParameters();
-        params.setFlashMode(Camera.Parameters.FOCUS_MODE_MACRO);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
         camera.setParameters(params);
         camera.cancelAutoFocus();
         camera.autoFocus(new Camera.AutoFocusCallback() {
