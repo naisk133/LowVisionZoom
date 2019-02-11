@@ -21,6 +21,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,7 @@ import cn.nekocode.camerafilter.filter.CameraFilter;
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private static final int REQUEST_CAMERA_PERMISSION = 101;
     private CameraRenderer renderer;
     private TextureView textureView;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView flashButton;
     private boolean flashFlag = false;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Original");
 
-        //TODO: handle the app
+        tts = new TextToSpeech(this, this);
+
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -81,6 +84,18 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             setupCameraPreviewView();
+        }
+    }
+
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            // Do something here
+            int result = tts.setLanguage(new Locale("th"));
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Toast.makeText(getApplicationContext(), "This language is not supported", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -126,7 +141,14 @@ public class MainActivity extends AppCompatActivity {
                 zoomIndex++;
                 zoomIndex %= zoomPercents.length;
                 int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
-                String text = String.format(Locale.ENGLISH, "%.1fX", (float) magnifyValue / 100);
+                float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
+
+                String speakText = decValue == Math.round(decValue)
+                        ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
+                        : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
+                tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
+
+                String text = String.format(Locale.ENGLISH, "%.1fX", decValue);
                 zoomLvl.setText(text);
             }
         });
@@ -152,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 SparseArray<CameraFilter> filters = renderer.getCameraFilterMap();
                 contrastIndex++;
                 contrastIndex %= filters.size();
+                tts.speak(String.format(Locale.ENGLISH, "สีภาพแบบที่ %d", contrastIndex + 1), TextToSpeech.QUEUE_FLUSH, null);
                 renderer.setSelectedFilter(filters.keyAt(contrastIndex));
             }
         });
@@ -161,9 +184,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!flashFlag) {
+                    tts.speak("แฟลชเปิด", TextToSpeech.QUEUE_FLUSH, null);
                     renderer.flash();
                     flashFlag = true;
                 } else {
+                    tts.speak("แฟลชปิด", TextToSpeech.QUEUE_FLUSH, null);
                     renderer.unflash();
                     flashFlag = false;
                 }
@@ -172,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void capture() {
+        tts.speak("ภาพนิ่ง", TextToSpeech.QUEUE_FLUSH, null);
         Bitmap bm = textureView.getBitmap();
         captureImageView.setImageBitmap(bm);
         captureImageView.setVisibility(View.VISIBLE);
@@ -179,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void uncapture() {
+        tts.speak("ภาพเคลื่อนไหว", TextToSpeech.QUEUE_FLUSH, null);
         captureImageView.setVisibility(View.INVISIBLE);
         captureFlag = false;
     }
