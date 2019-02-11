@@ -119,7 +119,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         final int backCameraId = backCamera.second;
         camera = Camera.open(backCameraId);
         Camera.Parameters params = camera.getParameters();
-        params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         camera.setParameters(params);
     }
 
@@ -283,7 +283,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
             public void onAutoFocus(boolean b, Camera camera) {
                 cb.onAutoFocus(b, camera);
                 Camera.Parameters params = camera.getParameters();
-                params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
+                params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
                 camera.setParameters(params);
             }
         });
