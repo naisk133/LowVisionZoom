@@ -12,64 +12,19 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="10dp">
-
-        <ImageView
-            android:id="@+id/zoom"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:src="@drawable/zoom_active"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/zoomLvl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="1.0X"
-            android:textColor="@color/visionYellow"
-            android:textSize="30sp"
-            android:visibility="visible" />
-    </FrameLayout>
-
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp">
 
-        <com.github.florent37.shapeofview.shapes.StarView
+        <ImageView
+            android:id="@+id/flash"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:src="@drawable/flash"
+            tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/flash"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center"
-                android:src="@drawable/rect_red"
-                tools:ignore="ContentDescription" />
-        </com.github.florent37.shapeofview.shapes.StarView>
-
-        <com.github.florent37.shapeofview.shapes.StarView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:src="@drawable/rect_black"
-                tools:ignore="ContentDescription" />
-
-        </com.github.florent37.shapeofview.shapes.StarView>
 
         <ImageView
             android:layout_width="45dp"
@@ -112,19 +67,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="100dp">
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/capture"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:src="@drawable/capture"
             tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_capture"
             tools:ignore="ContentDescription" />

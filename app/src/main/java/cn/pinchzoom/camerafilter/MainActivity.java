@@ -29,7 +29,6 @@ import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -43,11 +42,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private static final int REQUEST_CAMERA_PERMISSION = 101;
     private CameraRenderer renderer;
     private TextureView textureView;
-
-    private ImageView zoomButton;
-    private TextView zoomLvl;
-    private final float[] zoomPercents = new float[]{0.0f, 0.33f, 0.67f, 1.0f};
-    private int zoomIndex = 0;
 
     private ImageView captureButton;
     private boolean captureFlag = false;
@@ -121,26 +115,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         });
 
         textureView.setOnTouchListener(this);
-
-//        textureView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                renderer.focus(new Camera.AutoFocusCallback() {
-//                    @Override
-//                    public void onAutoFocus(boolean b, Camera camera) {
-//                    }
-//                });
-//            }
-//        });
-
-        zoomLvl = findViewById(R.id.zoomLvl);
-        zoomButton = findViewById(R.id.zoom);
-        zoomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoom();
-            }
-        });
 
         captureImageView = findViewById(R.id.captureImage);
 
@@ -253,20 +227,5 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
         return (float) Math.sqrt(x * x + y * y);
-    }
-
-    private void zoom() {
-        zoomIndex++;
-        zoomIndex %= zoomPercents.length;
-        int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
-        float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
-
-        String speakText = decValue == Math.round(decValue)
-                ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
-                : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
-        tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
-
-        String text = String.format(Locale.ENGLISH, "%.1fX", decValue);
-        zoomLvl.setText(text);
     }
 }
