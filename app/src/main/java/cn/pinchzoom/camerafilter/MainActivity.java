@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.nekocode.camerafilter;
+package cn.pinchzoom.camerafilter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import cn.nekocode.camerafilter.filter.CameraFilter;
+import cn.pinchzoom.camerafilter.filter.CameraFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)

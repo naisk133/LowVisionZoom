@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.nekocode.camerafilter;
+package cn.pinchzoom.camerafilter;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -33,14 +33,14 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import cn.nekocode.camerafilter.filter.BlackWhiteFilter;
-import cn.nekocode.camerafilter.filter.BlueOrangeFilter;
-import cn.nekocode.camerafilter.filter.BlueYellowFilter;
-import cn.nekocode.camerafilter.filter.CameraFilter;
-import cn.nekocode.camerafilter.filter.OrangeBlueFilter;
-import cn.nekocode.camerafilter.filter.OriginalFilter;
-import cn.nekocode.camerafilter.filter.WhiteBlackFilter;
-import cn.nekocode.camerafilter.filter.YellowBlueFilter;
+import cn.pinchzoom.camerafilter.filter.BlackWhiteFilter;
+import cn.pinchzoom.camerafilter.filter.BlueOrangeFilter;
+import cn.pinchzoom.camerafilter.filter.BlueYellowFilter;
+import cn.pinchzoom.camerafilter.filter.CameraFilter;
+import cn.pinchzoom.camerafilter.filter.OrangeBlueFilter;
+import cn.pinchzoom.camerafilter.filter.OriginalFilter;
+import cn.pinchzoom.camerafilter.filter.WhiteBlackFilter;
+import cn.pinchzoom.camerafilter.filter.YellowBlueFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)

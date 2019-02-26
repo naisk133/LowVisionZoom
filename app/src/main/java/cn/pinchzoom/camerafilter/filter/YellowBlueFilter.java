@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.nekocode.camerafilter.filter;
+package cn.pinchzoom.camerafilter.filter;
 
 import android.content.Context;
 import android.opengl.GLES20;
 
-import cn.nekocode.camerafilter.MyGLUtils;
-import cn.nekocode.camerafilter.R;
+import cn.pinchzoom.camerafilter.MyGLUtils;
+import cn.pinchzoom.camerafilter.R;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  */
-public class OriginalFilter extends CameraFilter {
+public class YellowBlueFilter extends CameraFilter {
     private int program;
 
-    public OriginalFilter(Context context) {
+    public YellowBlueFilter(Context context) {
         super(context);
 
         // Build shaders
-        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.original);
+        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.yellow_blue);
     }
 
     @Override
