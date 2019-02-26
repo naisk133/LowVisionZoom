@@ -33,11 +33,13 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
+import cn.nekocode.camerafilter.filter.BlackGreenFilter;
 import cn.nekocode.camerafilter.filter.BlackWhiteFilter;
-import cn.nekocode.camerafilter.filter.BlueOrangeFilter;
+import cn.nekocode.camerafilter.filter.BlackYellowFilter;
 import cn.nekocode.camerafilter.filter.BlueYellowFilter;
 import cn.nekocode.camerafilter.filter.CameraFilter;
-import cn.nekocode.camerafilter.filter.OrangeBlueFilter;
+import cn.nekocode.camerafilter.filter.GreenBlackFilter;
+import cn.nekocode.camerafilter.filter.YellowBlackFilter;
 import cn.nekocode.camerafilter.filter.OriginalFilter;
 import cn.nekocode.camerafilter.filter.WhiteBlackFilter;
 import cn.nekocode.camerafilter.filter.YellowBlueFilter;
@@ -119,7 +121,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         final int backCameraId = backCamera.second;
         camera = Camera.open(backCameraId);
         Camera.Parameters params = camera.getParameters();
-        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
         camera.setParameters(params);
     }
 
@@ -138,10 +140,12 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         cameraFilterMap.append(R.id.filter0, new OriginalFilter(context));
         cameraFilterMap.append(R.id.filter1, new BlackWhiteFilter(context));
         cameraFilterMap.append(R.id.filter2, new WhiteBlackFilter(context));
-        cameraFilterMap.append(R.id.filter3, new BlueOrangeFilter(context));
-        cameraFilterMap.append(R.id.filter4, new OrangeBlueFilter(context));
-        cameraFilterMap.append(R.id.filter5, new BlueYellowFilter(context));
-        cameraFilterMap.append(R.id.filter6, new YellowBlueFilter(context));
+        cameraFilterMap.append(R.id.filter3, new BlackGreenFilter(context));
+        cameraFilterMap.append(R.id.filter4, new GreenBlackFilter(context));
+        cameraFilterMap.append(R.id.filter5, new BlackYellowFilter(context));
+        cameraFilterMap.append(R.id.filter6, new YellowBlackFilter(context));
+        cameraFilterMap.append(R.id.filter7, new YellowBlueFilter(context));
+        cameraFilterMap.append(R.id.filter8, new BlueYellowFilter(context));
         setSelectedFilter(selectedFilterId);
 
         // Create texture for camera preview
@@ -275,7 +279,6 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
 
     public void focus(final Camera.AutoFocusCallback cb) {
         Camera.Parameters params = camera.getParameters();
-        params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
         camera.setParameters(params);
         camera.cancelAutoFocus();
         camera.autoFocus(new Camera.AutoFocusCallback() {
@@ -283,7 +286,6 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
             public void onAutoFocus(boolean b, Camera camera) {
                 cb.onAutoFocus(b, camera);
                 Camera.Parameters params = camera.getParameters();
-                params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
                 camera.setParameters(params);
             }
         });

@@ -43,33 +43,13 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp">
 
-        <com.github.florent37.shapeofview.shapes.StarView
+        <ImageView
+            android:id="@+id/flash"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/flash"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center"
-                android:src="@drawable/rect_red"
-                tools:ignore="ContentDescription" />
-        </com.github.florent37.shapeofview.shapes.StarView>
-
-        <com.github.florent37.shapeofview.shapes.StarView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:src="@drawable/rect_black"
-                tools:ignore="ContentDescription" />
-
-        </com.github.florent37.shapeofview.shapes.StarView>
+            android:src="@drawable/flash"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="45dp"
