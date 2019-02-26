@@ -119,7 +119,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         final int backCameraId = backCamera.second;
         camera = Camera.open(backCameraId);
         Camera.Parameters params = camera.getParameters();
-        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
         camera.setParameters(params);
     }
 
@@ -254,11 +254,23 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
 
     public int zoom(float zoomPercent) {
         Camera.Parameters params = camera.getParameters();
-
         int zoomLevel = (int) (zoomPercent * params.getMaxZoom());
+        return zoom(zoomLevel);
+    }
+
+    public int zoom(int zoomLevel) {
+        Camera.Parameters params = camera.getParameters();
         params.setZoom(zoomLevel);
         camera.setParameters(params);
         return params.getZoomRatios().get(zoomLevel);
+    }
+
+    public int getZoomLevel() {
+        return camera.getParameters().getZoom();
+    }
+
+    public int getMaxZoom() {
+        return camera.getParameters().getMaxZoom();
     }
 
     public void flash() {
@@ -283,7 +295,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
             public void onAutoFocus(boolean b, Camera camera) {
                 cb.onAutoFocus(b, camera);
                 Camera.Parameters params = camera.getParameters();
-                params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
                 camera.setParameters(params);
             }
         });

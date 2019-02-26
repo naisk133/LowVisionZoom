@@ -16,7 +16,6 @@
 package cn.nekocode.camerafilter;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -26,14 +25,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
-import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
 import java.util.Locale;
 
 import cn.nekocode.camerafilter.filter.CameraFilter;
@@ -41,7 +39,7 @@ import cn.nekocode.camerafilter.filter.CameraFilter;
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  */
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, View.OnTouchListener {
     private static final int REQUEST_CAMERA_PERMISSION = 101;
     private CameraRenderer renderer;
     private TextureView textureView;
@@ -122,34 +120,25 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        textureView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                renderer.focus(new Camera.AutoFocusCallback() {
-                    @Override
-                    public void onAutoFocus(boolean b, Camera camera) {
-                    }
-                });
-            }
-        });
+        textureView.setOnTouchListener(this);
+
+//        textureView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                renderer.focus(new Camera.AutoFocusCallback() {
+//                    @Override
+//                    public void onAutoFocus(boolean b, Camera camera) {
+//                    }
+//                });
+//            }
+//        });
 
         zoomLvl = findViewById(R.id.zoomLvl);
         zoomButton = findViewById(R.id.zoom);
         zoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomIndex++;
-                zoomIndex %= zoomPercents.length;
-                int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
-                float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
-
-                String speakText = decValue == Math.round(decValue)
-                        ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
-                        : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
-                tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
-
-                String text = String.format(Locale.ENGLISH, "%.1fX", decValue);
-                zoomLvl.setText(text);
+                zoom();
             }
         });
 
@@ -194,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 }
             }
         });
+
     }
 
     private void capture() {
@@ -208,5 +198,75 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         tts.speak("ภาพเคลื่อนไหว", TextToSpeech.QUEUE_FLUSH, null);
         captureImageView.setVisibility(View.INVISIBLE);
         captureFlag = false;
+    }
+
+    float mDist = 0;
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        // Get the pointer ID
+        int action = event.getAction();
+
+
+        if (event.getPointerCount() > 1) {
+            // handle multi-touch events
+            if (action == MotionEvent.ACTION_POINTER_DOWN) {
+                mDist = getFingerSpacing(event);
+            } else if (action == MotionEvent.ACTION_MOVE) {
+                handleZoom(event);
+            }
+        } else {
+            // handle single touch events
+            if (action == MotionEvent.ACTION_UP) {
+                renderer.focus(new Camera.AutoFocusCallback() {
+                    @Override
+                    public void onAutoFocus(boolean b, Camera camera) {
+                    }
+                });
+            }
+        }
+        view.performClick();
+        return true;
+    }
+
+    private void handleZoom(MotionEvent event) {
+        int zoom = renderer.getZoomLevel();
+        int maxZoom = renderer.getMaxZoom();
+        float newDist = getFingerSpacing(event);
+        if (newDist > mDist) {
+            //zoom in
+            if (zoom < maxZoom)
+                zoom += 2;
+        } else if (newDist < mDist) {
+            //zoom out
+            if (zoom > 0)
+                zoom -= 2;
+        }
+        mDist = newDist;
+        renderer.zoom(zoom);
+    }
+
+    /**
+     * Determine the space between the first two fingers
+     */
+    private float getFingerSpacing(MotionEvent event) {
+        float x = event.getX(0) - event.getX(1);
+        float y = event.getY(0) - event.getY(1);
+        return (float) Math.sqrt(x * x + y * y);
+    }
+
+    private void zoom() {
+        zoomIndex++;
+        zoomIndex %= zoomPercents.length;
+        int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
+        float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
+
+        String speakText = decValue == Math.round(decValue)
+                ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
+                : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
+        tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
+
+        String text = String.format(Locale.ENGLISH, "%.1fX", decValue);
+        zoomLvl.setText(text);
     }
 }
