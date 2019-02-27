@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.nekocode.camerafilter;
+package cn.plusminus.camerafilter;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -26,17 +25,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
-import android.view.KeyEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
 import java.util.Locale;
 
-import cn.nekocode.camerafilter.filter.CameraFilter;
+import cn.plusminus.camerafilter.filter.CameraFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)

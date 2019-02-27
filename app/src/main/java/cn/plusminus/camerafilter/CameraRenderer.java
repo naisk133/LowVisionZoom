@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.nekocode.camerafilter;
+package cn.plusminus.camerafilter;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -33,16 +33,16 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import cn.nekocode.camerafilter.filter.BlackCyanFilter;
-import cn.nekocode.camerafilter.filter.BlackWhiteFilter;
-import cn.nekocode.camerafilter.filter.BlackYellowFilter;
-import cn.nekocode.camerafilter.filter.BlueYellowFilter;
-import cn.nekocode.camerafilter.filter.CameraFilter;
-import cn.nekocode.camerafilter.filter.CyanBlackFilter;
-import cn.nekocode.camerafilter.filter.YellowBlackFilter;
-import cn.nekocode.camerafilter.filter.OriginalFilter;
-import cn.nekocode.camerafilter.filter.WhiteBlackFilter;
-import cn.nekocode.camerafilter.filter.YellowBlueFilter;
+import cn.plusminus.camerafilter.filter.BlackCyanFilter;
+import cn.plusminus.camerafilter.filter.BlackWhiteFilter;
+import cn.plusminus.camerafilter.filter.BlackYellowFilter;
+import cn.plusminus.camerafilter.filter.BlueYellowFilter;
+import cn.plusminus.camerafilter.filter.CameraFilter;
+import cn.plusminus.camerafilter.filter.CyanBlackFilter;
+import cn.plusminus.camerafilter.filter.YellowBlackFilter;
+import cn.plusminus.camerafilter.filter.OriginalFilter;
+import cn.plusminus.camerafilter.filter.WhiteBlackFilter;
+import cn.plusminus.camerafilter.filter.YellowBlueFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
