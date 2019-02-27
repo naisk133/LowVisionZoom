@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
 
                     String speakText = decValue == Math.round(decValue)
-                            ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
-                            : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
+                            ? String.format(Locale.ENGLISH, "ภาพขนาด %d เท่า", (int) decValue)
+                            : String.format(Locale.ENGLISH, "ภาพขนาด %.1f เท่า", decValue);
                     tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
@@ -157,8 +157,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
 
                     String speakText = decValue == Math.round(decValue)
-                            ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
-                            : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
+                            ? String.format(Locale.ENGLISH, "ภาพขนาด %d เท่า", (int) decValue)
+                            : String.format(Locale.ENGLISH, "ภาพขนาด %.1f เท่า", decValue);
                     tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
