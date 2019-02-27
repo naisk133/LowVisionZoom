@@ -12,8 +12,10 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp">
 
         <ImageView
             android:id="@+id/zoom"
@@ -23,17 +25,13 @@
             android:src="@drawable/zoom_active"
             tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/zoomLvl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:text="1.0X"
-            android:textColor="@color/visionYellow"
-            android:textSize="30sp"
+            android:src="@drawable/ic_add"
             android:visibility="visible" />
     </FrameLayout>
-
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -42,6 +40,24 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp">
+
+        <ImageView
+            android:id="@+id/zoomMinus"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/minus"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp">
 
         <ImageView
             android:id="@+id/flash"
@@ -62,10 +78,10 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="10dp"
+        android:layout_gravity="top|end"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
 
 
         <ImageView
@@ -92,19 +108,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="100dp">
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/capture"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:src="@drawable/capture"
             tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_capture"
             tools:ignore="ContentDescription" />

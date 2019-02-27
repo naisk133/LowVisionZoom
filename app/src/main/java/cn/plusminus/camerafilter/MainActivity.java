@@ -28,7 +28,6 @@ import android.util.SparseArray;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private TextureView textureView;
 
     private ImageView zoomButton;
-    private TextView zoomLvl;
     private final float[] zoomPercents = new float[]{0.0f, 0.33f, 0.67f, 1.0f};
     private int zoomIndex = 0;
 
@@ -130,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        zoomLvl = findViewById(R.id.zoomLvl);
         zoomButton = findViewById(R.id.zoom);
         zoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
 
                 String text = String.format(Locale.ENGLISH, "%.1fX", decValue);
-                zoomLvl.setText(text);
             }
         });
 
