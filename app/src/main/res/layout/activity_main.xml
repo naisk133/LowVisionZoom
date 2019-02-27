@@ -42,7 +42,7 @@
         android:layout_marginStart="10dp">
 
         <ImageView
-            android:id="@+id/zoomMinus"
+            android:id="@+id/unZoom"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"

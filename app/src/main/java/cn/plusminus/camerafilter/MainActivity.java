@@ -43,8 +43,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private TextureView textureView;
 
     private ImageView zoomButton;
+    private ImageView unZoomButton;
     private final float[] zoomPercents = new float[]{0.0f, 0.33f, 0.67f, 1.0f};
     private int zoomIndex = 0;
+
 
     private ImageView captureButton;
     private boolean captureFlag = false;
@@ -132,17 +134,33 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         zoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomIndex++;
-                zoomIndex %= zoomPercents.length;
-                int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
-                float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
+                if (zoomIndex < zoomPercents.length - 1) {
+                    zoomIndex++;
+                    int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
+                    float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
 
-                String speakText = decValue == Math.round(decValue)
-                        ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
-                        : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
-                tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
+                    String speakText = decValue == Math.round(decValue)
+                            ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
+                            : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
+                    tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
+                }
+            }
+        });
 
-                String text = String.format(Locale.ENGLISH, "%.1fX", decValue);
+        unZoomButton = findViewById(R.id.unZoom);
+        unZoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (zoomIndex > 0) {
+                    zoomIndex--;
+                    int magnifyValue = renderer.zoom(zoomPercents[zoomIndex]);
+                    float decValue = (float) Math.round((float) magnifyValue / 10) / 10;
+
+                    String speakText = decValue == Math.round(decValue)
+                            ? String.format(Locale.ENGLISH, "ขยายภาพ %d เท่า", (int) decValue)
+                            : String.format(Locale.ENGLISH, "ขยายภาพ %.1f เท่า", decValue);
+                    tts.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
+                }
             }
         });
 
