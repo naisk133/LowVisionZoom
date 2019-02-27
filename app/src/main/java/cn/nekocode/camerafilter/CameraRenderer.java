@@ -33,12 +33,12 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import cn.nekocode.camerafilter.filter.BlackGreenFilter;
+import cn.nekocode.camerafilter.filter.BlackCyanFilter;
 import cn.nekocode.camerafilter.filter.BlackWhiteFilter;
 import cn.nekocode.camerafilter.filter.BlackYellowFilter;
 import cn.nekocode.camerafilter.filter.BlueYellowFilter;
 import cn.nekocode.camerafilter.filter.CameraFilter;
-import cn.nekocode.camerafilter.filter.GreenBlackFilter;
+import cn.nekocode.camerafilter.filter.CyanBlackFilter;
 import cn.nekocode.camerafilter.filter.YellowBlackFilter;
 import cn.nekocode.camerafilter.filter.OriginalFilter;
 import cn.nekocode.camerafilter.filter.WhiteBlackFilter;
@@ -140,8 +140,8 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         cameraFilterMap.append(R.id.filter0, new OriginalFilter(context));
         cameraFilterMap.append(R.id.filter1, new BlackWhiteFilter(context));
         cameraFilterMap.append(R.id.filter2, new WhiteBlackFilter(context));
-        cameraFilterMap.append(R.id.filter3, new BlackGreenFilter(context));
-        cameraFilterMap.append(R.id.filter4, new GreenBlackFilter(context));
+        cameraFilterMap.append(R.id.filter3, new BlackCyanFilter(context));
+        cameraFilterMap.append(R.id.filter4, new CyanBlackFilter(context));
         cameraFilterMap.append(R.id.filter5, new BlackYellowFilter(context));
         cameraFilterMap.append(R.id.filter6, new YellowBlackFilter(context));
         cameraFilterMap.append(R.id.filter7, new YellowBlueFilter(context));

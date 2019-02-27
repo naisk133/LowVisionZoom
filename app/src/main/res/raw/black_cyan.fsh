@@ -24,7 +24,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	vec3 tex = fragColor.rgb;
 	float shade = dot(tex, vec3(0.333333));
 
-	vec3 col = mix(vec3(0.35, 1.0, 0.50), vec3(0, 0, 0), 1.0-shade);
+	vec3 col = mix(vec3(0, 0, 0), vec3(0.7, 1.0, 1.0), 1.0-shade);
 	
     fragColor = vec4(col,1.0);
 }

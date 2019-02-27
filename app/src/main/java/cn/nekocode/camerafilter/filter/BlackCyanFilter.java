@@ -24,14 +24,14 @@ import cn.nekocode.camerafilter.R;
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  */
-public class BlackGreenFilter extends CameraFilter {
+public class BlackCyanFilter extends CameraFilter {
     private int program;
 
-    public BlackGreenFilter(Context context) {
+    public BlackCyanFilter(Context context) {
         super(context);
 
         // Build shaders
-        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.black_green);
+        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.black_cyan);
     }
 
     @Override
