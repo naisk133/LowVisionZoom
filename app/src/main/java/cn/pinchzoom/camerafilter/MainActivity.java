@@ -147,11 +147,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             @Override
             public void onClick(View view) {
                 if (!flashFlag) {
-                    tts.speak("แฟลชเปิด", TextToSpeech.QUEUE_FLUSH, null);
+                    tts.speak("เปิดไฟ", TextToSpeech.QUEUE_FLUSH, null);
                     renderer.flash();
                     flashFlag = true;
                 } else {
-                    tts.speak("แฟลชปิด", TextToSpeech.QUEUE_FLUSH, null);
+                    tts.speak("ปิดไฟ", TextToSpeech.QUEUE_FLUSH, null);
                     renderer.unflash();
                     flashFlag = false;
                 }

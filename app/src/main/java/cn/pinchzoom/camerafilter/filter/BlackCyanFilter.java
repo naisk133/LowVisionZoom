@@ -24,14 +24,14 @@ import cn.pinchzoom.camerafilter.R;
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  */
-public class BlueOrangeFilter extends CameraFilter {
+public class BlackCyanFilter extends CameraFilter {
     private int program;
 
-    public BlueOrangeFilter(Context context) {
+    public BlackCyanFilter(Context context) {
         super(context);
 
         // Build shaders
-        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.blue_orange);
+        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.black_cyan);
     }
 
     @Override
