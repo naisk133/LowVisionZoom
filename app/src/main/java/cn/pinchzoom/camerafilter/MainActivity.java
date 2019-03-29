@@ -39,6 +39,8 @@ import cn.pinchzoom.camerafilter.filter.CameraFilter;
  * @author nekocode (nekocode.cn@gmail.com)
  */
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, View.OnTouchListener {
+    public static final String TAG = "MainActivity";
+
     private static final int REQUEST_CAMERA_PERMISSION = 101;
     private CameraRenderer renderer;
     private TextureView textureView;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private ImageView flashButton;
     private boolean flashFlag = false;
     private TextToSpeech tts;
+
+    private CameraThread mCameraThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,33 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         } else {
             setupCameraPreviewView();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mCameraThread = new CameraThread(renderer);
+        mCameraThread.start();
+        mCameraThread.waitUntilReady();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mCameraThread == null) {
+            return;
+        }
+        CameraHandler rh = mCameraThread.getHandler();
+
+        rh.sendShutdown();
+        try {
+            mCameraThread.join();
+        } catch (InterruptedException ie) {
+            // not expected
+            throw new RuntimeException("join was interrupted", ie);
+        }
+        mCameraThread = null;
     }
 
     @Override
@@ -174,8 +205,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         captureFlag = false;
     }
 
-    float mDist = 0;
-
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         // Get the pointer ID
@@ -185,9 +214,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if (event.getPointerCount() > 1) {
             // handle multi-touch events
             if (action == MotionEvent.ACTION_POINTER_DOWN) {
-                mDist = getFingerSpacing(event);
+                mCameraThread.getHandler().sendInitZoom(event);
             } else if (action == MotionEvent.ACTION_MOVE) {
-                handleZoom(event);
+                mCameraThread.getHandler().sendZoom(event);
             }
         } else {
             // handle single touch events
@@ -201,31 +230,5 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
         view.performClick();
         return true;
-    }
-
-    private void handleZoom(MotionEvent event) {
-        int zoom = renderer.getZoomLevel();
-        int maxZoom = renderer.getMaxZoom();
-        float newDist = getFingerSpacing(event);
-        if (newDist > mDist) {
-            //zoom in
-            if (zoom < maxZoom)
-                zoom += 2;
-        } else if (newDist < mDist) {
-            //zoom out
-            if (zoom > 0)
-                zoom -= 2;
-        }
-        mDist = newDist;
-        renderer.zoom(zoom);
-    }
-
-    /**
-     * Determine the space between the first two fingers
-     */
-    private float getFingerSpacing(MotionEvent event) {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return (float) Math.sqrt(x * x + y * y);
     }
 }
