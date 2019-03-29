@@ -1,6 +1,5 @@
 package cn.pinchzoom.camerafilter;
 
-import android.hardware.Camera;
 import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -25,7 +24,7 @@ public class CameraThread extends Thread {
 
     private float mDist = 0;
 
-    private static final int THROTTLE_RATE = 3;
+    private static final int THROTTLE_RATE = 4;
     private int throttleCount = 0;
 
     CameraThread(CameraRenderer renderer) {
@@ -100,7 +99,7 @@ public class CameraThread extends Thread {
             int zoom = renderer.getZoomLevel();
 
             int mMaxZoom = renderer.getMaxZoom();
-            int mZoomStep = Math.max(mMaxZoom * 4 / 100, 1);
+            int mZoomStep = Math.max(mMaxZoom * 5 / 100, 1);
 
             if (newDist > mDist) {
                 //zoom in

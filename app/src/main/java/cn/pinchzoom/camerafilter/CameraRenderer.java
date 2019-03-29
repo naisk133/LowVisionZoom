@@ -33,12 +33,10 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import cn.pinchzoom.camerafilter.filter.BlackCyanFilter;
 import cn.pinchzoom.camerafilter.filter.BlackWhiteFilter;
 import cn.pinchzoom.camerafilter.filter.BlackYellowFilter;
 import cn.pinchzoom.camerafilter.filter.BlueYellowFilter;
 import cn.pinchzoom.camerafilter.filter.CameraFilter;
-import cn.pinchzoom.camerafilter.filter.CyanBlackFilter;
 import cn.pinchzoom.camerafilter.filter.YellowBlackFilter;
 import cn.pinchzoom.camerafilter.filter.OriginalFilter;
 import cn.pinchzoom.camerafilter.filter.WhiteBlackFilter;
@@ -140,12 +138,10 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         cameraFilterMap.append(R.id.filter0, new OriginalFilter(context));
         cameraFilterMap.append(R.id.filter1, new BlackWhiteFilter(context));
         cameraFilterMap.append(R.id.filter2, new WhiteBlackFilter(context));
-        cameraFilterMap.append(R.id.filter3, new BlackCyanFilter(context));
-        cameraFilterMap.append(R.id.filter4, new CyanBlackFilter(context));
-        cameraFilterMap.append(R.id.filter5, new BlackYellowFilter(context));
-        cameraFilterMap.append(R.id.filter6, new YellowBlackFilter(context));
-        cameraFilterMap.append(R.id.filter7, new YellowBlueFilter(context));
-        cameraFilterMap.append(R.id.filter8, new BlueYellowFilter(context));
+        cameraFilterMap.append(R.id.filter3, new BlackYellowFilter(context));
+        cameraFilterMap.append(R.id.filter4, new YellowBlackFilter(context));
+        cameraFilterMap.append(R.id.filter5, new YellowBlueFilter(context));
+        cameraFilterMap.append(R.id.filter6, new BlueYellowFilter(context));
         setSelectedFilter(selectedFilterId);
 
         // Create texture for camera preview
