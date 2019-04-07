@@ -205,12 +205,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         captureImageView.setImageBitmap(bm);
         captureImageView.setVisibility(View.VISIBLE);
         captureFlag = true;
+        binding.setCaptureButtonIcon(R.drawable.ic_play_arrow);
     }
 
     private void uncapture() {
         tts.speak("ภาพเคลื่อนไหว", TextToSpeech.QUEUE_FLUSH, null);
         captureImageView.setVisibility(View.INVISIBLE);
         captureFlag = false;
+        binding.setCaptureButtonIcon(R.drawable.ic_capture);
     }
 
     @Override
