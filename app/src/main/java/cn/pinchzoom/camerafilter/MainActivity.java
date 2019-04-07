@@ -17,6 +17,8 @@ package cn.pinchzoom.camerafilter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import cn.pinchzoom.camerafilter.databinding.ActivityMainBinding;
 import cn.pinchzoom.camerafilter.filter.CameraFilter;
 
 /**
@@ -58,11 +61,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private CameraThread mCameraThread;
 
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setTitle("Original");
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.setCaptureButtonIcon(R.drawable.ic_capture);
 
         tts = new TextToSpeech(this, this);
 
@@ -168,8 +174,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 SparseArray<CameraFilter> filters = renderer.getCameraFilterMap();
                 contrastIndex++;
                 contrastIndex %= filters.size();
-                tts.speak(String.format(Locale.ENGLISH, "สีภาพแบบที่ %d", contrastIndex + 1), TextToSpeech.QUEUE_FLUSH, null);
                 renderer.setSelectedFilter(filters.keyAt(contrastIndex));
+
+                String filterText = renderer.getSelectedFilterName();
+                tts.speak(String.format(Locale.ENGLISH, filterText, contrastIndex + 1), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
 

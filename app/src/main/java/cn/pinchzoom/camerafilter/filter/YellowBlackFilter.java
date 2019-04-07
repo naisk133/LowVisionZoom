@@ -42,4 +42,9 @@ public class YellowBlackFilter extends CameraFilter {
                 new int[][]{});
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
     }
+
+    @Override
+    public String getName() {
+        return "สีพื้นเหลืองอักษรดำ";
+    }
 }

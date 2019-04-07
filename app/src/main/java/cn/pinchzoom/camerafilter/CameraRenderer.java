@@ -130,16 +130,20 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
             selectedFilter.onAttach();
     }
 
+    public String getSelectedFilterName() {
+        return selectedFilter.getName();
+    }
+
     @Override
     public void run() {
         initGL(surfaceTexture);
 
         // Setup camera filters map
         cameraFilterMap.append(R.id.filter0, new OriginalFilter(context));
-        cameraFilterMap.append(R.id.filter1, new BlackWhiteFilter(context));
-        cameraFilterMap.append(R.id.filter2, new WhiteBlackFilter(context));
-        cameraFilterMap.append(R.id.filter3, new BlackYellowFilter(context));
-        cameraFilterMap.append(R.id.filter4, new YellowBlackFilter(context));
+        cameraFilterMap.append(R.id.filter1, new WhiteBlackFilter(context));
+        cameraFilterMap.append(R.id.filter2, new BlackWhiteFilter(context));
+        cameraFilterMap.append(R.id.filter3, new YellowBlackFilter(context));
+        cameraFilterMap.append(R.id.filter4, new BlackYellowFilter(context));
         cameraFilterMap.append(R.id.filter5, new YellowBlueFilter(context));
         cameraFilterMap.append(R.id.filter6, new BlueYellowFilter(context));
         setSelectedFilter(selectedFilterId);

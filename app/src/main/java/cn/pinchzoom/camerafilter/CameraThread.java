@@ -1,8 +1,10 @@
 package cn.pinchzoom.camerafilter;
 
+import android.databinding.BindingAdapter;
 import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 
 import static cn.pinchzoom.camerafilter.MainActivity.TAG;
 
@@ -129,6 +131,13 @@ public class CameraThread extends Thread {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
         return (float) Math.sqrt(x * x + y * y);
+    }
+
+    public static class DataBindingAdapter {
+        @BindingAdapter("imageResource")
+        public static void setImageResource(ImageView imageView, int resource) {
+            imageView.setImageResource(resource);
+        }
     }
 }
 

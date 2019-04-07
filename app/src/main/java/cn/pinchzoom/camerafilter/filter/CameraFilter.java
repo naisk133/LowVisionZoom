@@ -182,4 +182,6 @@ public abstract class CameraFilter {
         PROGRAM = 0;
         CAMERA_RENDER_BUF = null;
     }
+
+    public abstract String getName();
 }
