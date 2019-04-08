@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
@@ -21,6 +22,7 @@ import java.util.Locale;
 
 import cn.pinchzoom.camerafilter.databinding.ActivityMainBinding;
 import cn.pinchzoom.camerafilter.filter.CameraFilter;
+import me.toptas.fancyshowcase.FancyShowCaseView;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, View.OnTouchListener {
     public static final String TAG = "MainActivity";
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         binding.setCaptureButtonIcon(R.drawable.ic_capture);
 
         tts = new TextToSpeech(this, this);
+
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
@@ -117,7 +120,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    void setupCameraPreviewView() {
+    private void displayManual() {
+        new FancyShowCaseView.Builder(this)
+                .focusOn(textureView)
+                .focusCircleRadiusFactor(0.4)
+                .titleGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL)
+                .title("\n\nใช้ 2 นิ้วเพื่อขยาย/ย่อ")
+                .build()
+                .show();
+    }
+
+    private void setupCameraPreviewView() {
         renderer = new CameraRenderer(this);
         textureView = findViewById(R.id.textureView);
         textureView.setSurfaceTextureListener(renderer);
@@ -179,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
+        displayManual();
     }
 
     private void capture() {
