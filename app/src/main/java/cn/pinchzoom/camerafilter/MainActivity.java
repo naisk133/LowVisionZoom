@@ -1,24 +1,8 @@
-/*
- * Copyright 2016 nekocode
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.pinchzoom.camerafilter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -38,9 +22,6 @@ import java.util.Locale;
 import cn.pinchzoom.camerafilter.databinding.ActivityMainBinding;
 import cn.pinchzoom.camerafilter.filter.CameraFilter;
 
-/**
- * @author nekocode (nekocode.cn@gmail.com)
- */
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, View.OnTouchListener {
     public static final String TAG = "MainActivity";
 
@@ -75,12 +56,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                Toast.makeText(this, "Camera access is required.", Toast.LENGTH_SHORT).show();
-
-            }
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                     REQUEST_CAMERA_PERMISSION);
 
@@ -134,15 +109,22 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             case REQUEST_CAMERA_PERMISSION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setupCameraPreviewView();
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                            REQUEST_CAMERA_PERMISSION);
                 }
             }
         }
     }
 
     void setupCameraPreviewView() {
-        textureView = findViewById(R.id.textureView);
         renderer = new CameraRenderer(this);
+        textureView = findViewById(R.id.textureView);
         textureView.setSurfaceTextureListener(renderer);
+
+        if (textureView.isAvailable()) {
+            renderer.onSurfaceTextureAvailable(textureView.getSurfaceTexture(), textureView.getWidth(), textureView.getHeight());
+        }
 
         textureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
