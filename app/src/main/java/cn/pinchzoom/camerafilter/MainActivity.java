@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -46,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private boolean flashFlag = false;
     private TextToSpeech tts;
 
+    private ImageView helpButton;
+
     private CameraThread mCameraThread;
 
     private ActivityMainBinding binding;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setCaptureButtonIcon(R.drawable.ic_capture);
+        binding.setVolumeButtonIcon(R.drawable.ic_volume_on);
 
         tts = new TextToSpeech(this, this);
 
@@ -124,31 +126,58 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    private void displayManual() {
-        final FancyShowCaseView captureShowCase = new FancyShowCaseView.Builder(this)
+    private FancyShowCaseView.Builder captureShowCaseBuilder() {
+        return new FancyShowCaseView.Builder(this)
                 .focusOn(captureButton)
                 .title("กดปุ่มนี้เพื่อหยุดภาพ")
-                .titleSize(48, TypedValue.COMPLEX_UNIT_SP)
-                .build();
-        final FancyShowCaseView flashShowCase = new FancyShowCaseView.Builder(this)
+                .titleSize(48, TypedValue.COMPLEX_UNIT_SP);
+    }
+
+    private FancyShowCaseView.Builder flashShowCaseBuilder() {
+        return new FancyShowCaseView.Builder(this)
                 .focusOn(flashButton)
                 .title("กดปุ่มนี้เพื่อเปิด/ปิดไฟ")
-                .titleSize(48, TypedValue.COMPLEX_UNIT_SP)
-                .build();
-        final FancyShowCaseView contrastShowCase = new FancyShowCaseView.Builder(this)
+                .titleSize(48, TypedValue.COMPLEX_UNIT_SP);
+    }
+
+    private FancyShowCaseView.Builder contrastShowCaseBuilder() {
+        return new FancyShowCaseView.Builder(this)
                 .focusOn(constrastButton)
                 .title("กดปุ่มนี้เพื่อเปลี่ยนสี")
-                .titleSize(48, TypedValue.COMPLEX_UNIT_SP)
-                .build();
-        final FancyShowCaseView pinchZoomShowCase = new FancyShowCaseView.Builder(this)
+                .titleSize(48, TypedValue.COMPLEX_UNIT_SP);
+    }
+
+    private FancyShowCaseView.Builder pinchZoomShowCaseBuilder() {
+        return new FancyShowCaseView.Builder(this)
                 .focusOn(textureView)
                 .customView(R.layout.pinch_tutorial, new OnViewInflateListener() {
                     @Override
                     public void onViewInflated(@NonNull View view) {
 
                     }
-                })
-                .build();
+                });
+    }
+
+    private void displayManual() {
+        FancyShowCaseView captureShowCase = captureShowCaseBuilder().build();
+        FancyShowCaseView contrastShowCase = contrastShowCaseBuilder().build();
+        FancyShowCaseView flashShowCase = flashShowCaseBuilder().build();
+        FancyShowCaseView pinchZoomShowCase = pinchZoomShowCaseBuilder().build();
+
+        final FancyShowCaseQueue queue = new FancyShowCaseQueue()
+                .add(captureShowCase)
+                .add(contrastShowCase)
+                .add(flashShowCase)
+                .add(pinchZoomShowCase);
+
+        queue.show();
+    }
+
+    private void displayManualOnce() {
+        FancyShowCaseView captureShowCase = captureShowCaseBuilder().showOnce("capture").build();
+        FancyShowCaseView contrastShowCase = contrastShowCaseBuilder().showOnce("contrast").build();
+        FancyShowCaseView flashShowCase = flashShowCaseBuilder().showOnce("flash").build();
+        FancyShowCaseView pinchZoomShowCase = pinchZoomShowCaseBuilder().showOnce("pinchZoom").build();
 
         final FancyShowCaseQueue queue = new FancyShowCaseQueue()
                 .add(captureShowCase)
@@ -221,7 +250,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        displayManual();
+        helpButton = findViewById(R.id.help);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayManual();
+            }
+        });
+
+        displayManualOnce();
     }
 
     private void capture() {
