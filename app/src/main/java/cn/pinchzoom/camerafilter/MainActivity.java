@@ -7,11 +7,13 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.Dimension;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
-import android.view.Gravity;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
@@ -22,7 +24,9 @@ import java.util.Locale;
 
 import cn.pinchzoom.camerafilter.databinding.ActivityMainBinding;
 import cn.pinchzoom.camerafilter.filter.CameraFilter;
+import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
+import me.toptas.fancyshowcase.OnViewInflateListener;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, View.OnTouchListener {
     public static final String TAG = "MainActivity";
@@ -121,13 +125,38 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     private void displayManual() {
-        new FancyShowCaseView.Builder(this)
+        final FancyShowCaseView captureShowCase = new FancyShowCaseView.Builder(this)
+                .focusOn(captureButton)
+                .title("กดปุ่มนี้เพื่อหยุดภาพ")
+                .titleSize(48, TypedValue.COMPLEX_UNIT_SP)
+                .build();
+        final FancyShowCaseView flashShowCase = new FancyShowCaseView.Builder(this)
+                .focusOn(flashButton)
+                .title("กดปุ่มนี้เพื่อเปิด/ปิดไฟ")
+                .titleSize(48, TypedValue.COMPLEX_UNIT_SP)
+                .build();
+        final FancyShowCaseView contrastShowCase = new FancyShowCaseView.Builder(this)
+                .focusOn(constrastButton)
+                .title("กดปุ่มนี้เพื่อเปลี่ยนสี")
+                .titleSize(48, TypedValue.COMPLEX_UNIT_SP)
+                .build();
+        final FancyShowCaseView pinchZoomShowCase = new FancyShowCaseView.Builder(this)
                 .focusOn(textureView)
-                .focusCircleRadiusFactor(0.4)
-                .titleGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL)
-                .title("\n\nใช้ 2 นิ้วเพื่อขยาย/ย่อ")
-                .build()
-                .show();
+                .customView(R.layout.pinch_tutorial, new OnViewInflateListener() {
+                    @Override
+                    public void onViewInflated(@NonNull View view) {
+
+                    }
+                })
+                .build();
+
+        final FancyShowCaseQueue queue = new FancyShowCaseQueue()
+                .add(captureShowCase)
+                .add(contrastShowCase)
+                .add(flashShowCase)
+                .add(pinchZoomShowCase);
+
+        queue.show();
     }
 
     private void setupCameraPreviewView() {
