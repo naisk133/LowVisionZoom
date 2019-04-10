@@ -1,4 +1,4 @@
-package cn.pinchzoom.camerafilter;
+package cn.wattanai.zoomdee;
 
 import android.os.Handler;
 import android.os.Message;
@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 import java.lang.ref.WeakReference;
 
-import static cn.pinchzoom.camerafilter.MainActivity.TAG;
+import static cn.wattanai.zoomdee.MainActivity.TAG;
 
 /**
  * Handler for CameraThread.  Used for messages sent from the UI thread to the render thread.

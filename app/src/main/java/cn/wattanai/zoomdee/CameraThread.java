@@ -1,4 +1,4 @@
-package cn.pinchzoom.camerafilter;
+package cn.wattanai.zoomdee;
 
 import android.databinding.BindingAdapter;
 import android.os.Looper;
@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-import static cn.pinchzoom.camerafilter.MainActivity.TAG;
+import static cn.wattanai.zoomdee.MainActivity.TAG;
 
 
 /**

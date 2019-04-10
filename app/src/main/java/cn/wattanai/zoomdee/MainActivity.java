@@ -1,4 +1,4 @@
-package cn.pinchzoom.camerafilter;
+package cn.wattanai.zoomdee;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -21,8 +21,8 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import cn.pinchzoom.camerafilter.databinding.ActivityMainBinding;
-import cn.pinchzoom.camerafilter.filter.CameraFilter;
+import cn.wattanai.zoomdee.databinding.ActivityMainBinding;
+import cn.wattanai.zoomdee.filter.CameraFilter;
 import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
 import me.toptas.fancyshowcase.OnViewInflateListener;

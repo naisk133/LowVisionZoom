@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.pinchzoom.camerafilter.filter;
+package cn.wattanai.zoomdee.filter;
 
 import android.content.Context;
 import android.opengl.GLES20;
 
-import cn.pinchzoom.camerafilter.MyGLUtils;
-import cn.pinchzoom.camerafilter.R;
+import cn.wattanai.zoomdee.MyGLUtils;
+import cn.wattanai.zoomdee.R;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  */
-public class BlackYellowFilter extends CameraFilter {
+public class YellowBlueFilter extends CameraFilter {
     private int program;
 
-    public BlackYellowFilter(Context context) {
+    public YellowBlueFilter(Context context) {
         super(context);
 
         // Build shaders
-        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.black_yellow);
+        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.yellow_blue);
     }
 
     @Override
@@ -45,6 +45,6 @@ public class BlackYellowFilter extends CameraFilter {
 
     @Override
     public String getName() {
-        return "สีพื้นดำอักษรเหลือง";
+        return "สีพื้นเหลืองอักษรน้ำเงิน";
     }
 }

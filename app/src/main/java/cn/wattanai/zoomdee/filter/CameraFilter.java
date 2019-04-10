@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.pinchzoom.camerafilter.filter;
+package cn.wattanai.zoomdee.filter;
 
 import android.content.Context;
 import android.opengl.GLES11Ext;
@@ -24,9 +24,9 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import cn.pinchzoom.camerafilter.MyGLUtils;
-import cn.pinchzoom.camerafilter.R;
-import cn.pinchzoom.camerafilter.RenderBuffer;
+import cn.wattanai.zoomdee.MyGLUtils;
+import cn.wattanai.zoomdee.R;
+import cn.wattanai.zoomdee.RenderBuffer;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)

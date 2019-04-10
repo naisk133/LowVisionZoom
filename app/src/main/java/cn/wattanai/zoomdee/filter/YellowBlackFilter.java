@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.pinchzoom.camerafilter.filter;
+package cn.wattanai.zoomdee.filter;
 
 import android.content.Context;
 import android.opengl.GLES20;
 
-import cn.pinchzoom.camerafilter.MyGLUtils;
-import cn.pinchzoom.camerafilter.R;
+import cn.wattanai.zoomdee.MyGLUtils;
+import cn.wattanai.zoomdee.R;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)

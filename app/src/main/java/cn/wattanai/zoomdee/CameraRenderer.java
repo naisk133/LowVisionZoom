@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.pinchzoom.camerafilter;
+package cn.wattanai.zoomdee;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -33,14 +33,14 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import cn.pinchzoom.camerafilter.filter.BlackWhiteFilter;
-import cn.pinchzoom.camerafilter.filter.BlackYellowFilter;
-import cn.pinchzoom.camerafilter.filter.BlueYellowFilter;
-import cn.pinchzoom.camerafilter.filter.CameraFilter;
-import cn.pinchzoom.camerafilter.filter.OriginalFilter;
-import cn.pinchzoom.camerafilter.filter.WhiteBlackFilter;
-import cn.pinchzoom.camerafilter.filter.YellowBlackFilter;
-import cn.pinchzoom.camerafilter.filter.YellowBlueFilter;
+import cn.wattanai.zoomdee.filter.BlackWhiteFilter;
+import cn.wattanai.zoomdee.filter.BlackYellowFilter;
+import cn.wattanai.zoomdee.filter.BlueYellowFilter;
+import cn.wattanai.zoomdee.filter.CameraFilter;
+import cn.wattanai.zoomdee.filter.OriginalFilter;
+import cn.wattanai.zoomdee.filter.WhiteBlackFilter;
+import cn.wattanai.zoomdee.filter.YellowBlackFilter;
+import cn.wattanai.zoomdee.filter.YellowBlueFilter;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
